@@ -66,8 +66,6 @@ function App() {
       .catch((e) => {
         if (e.code === 'UserNotFoundException') {
           signUp();
-          // setMessage(WAITINGFOROTP);
-          setWaiting(true);
         } else if (e.code === 'UsernameExistsException') {
           setMessage(WAITINGFOROTP);
           setWaiting(true);
