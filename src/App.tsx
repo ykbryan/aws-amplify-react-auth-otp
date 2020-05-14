@@ -21,6 +21,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [otp, setOtp] = useState('');
   const [number, setNumber] = useState('');
+  const [waiting, setWaiting] = useState(false);
 
   useEffect(() => {
     console.log('Ready to auth');
@@ -52,7 +53,6 @@ function App() {
   const signIn = () => {
     Auth.signIn(number)
       .then((user) => {
-        console.log(user);
         setUser(user);
       })
       .catch((e) => {
@@ -61,7 +61,8 @@ function App() {
         } else if (e.code === 'UserNotConfirmedException') {
           setMessage('user needs to confirm the account');
         } else {
-          console.log(e);
+          console.log(e.code);
+          console.error(e);
         }
       });
   };
@@ -81,7 +82,7 @@ function App() {
         >
           Learn React
         </a>
-        {!otp && (
+        {!user && !waiting && (
           <div>
             <InputGroup className='mb-3'>
               <FormControl
@@ -98,7 +99,7 @@ function App() {
             </InputGroup>
           </div>
         )}
-        {otp && (
+        {!user && waiting && (
           <div>
             <InputGroup className='mb-3'>
               <FormControl
