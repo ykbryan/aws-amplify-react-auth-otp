@@ -1,0 +1,15 @@
+{
+    "trigger": true,
+    "modules": [
+        "custom"
+    ],
+    "parentResource": "amplifyreactotp",
+    "functionName": "amplifyreactotpPreSignup",
+    "resourceName": "amplifyreactotpPreSignup",
+    "parentStack": "auth",
+    "triggerEnvs": [],
+    "triggerDir": "/Users/bchua/.nvm/versions/node/v8.16.0/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/utils/../triggers/PreSignup",
+    "triggerTemplate": "PreSignup.json.ejs",
+    "roleName": "amplifyreactotpPreSignup",
+    "skipEdit": true
+}

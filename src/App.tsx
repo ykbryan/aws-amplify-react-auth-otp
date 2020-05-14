@@ -15,16 +15,21 @@ Amplify.configure(awsconfig);
 const NOTSIGNIN = 'You are NOT logged in';
 const SIGNEDIN = 'You have logged in successfully';
 const SIGNEDOUT = 'You have logged out successfully';
+const WAITINGFOROTP = 'Enter OTP number';
+const VERIFYNUMBER = 'Verifying number';
 
 function App() {
   const [message, setMessage] = useState('Welcome to AWS Amplify Demo');
   const [user, setUser] = useState(null);
+  const [guest, setGuest] = useState(null);
   const [otp, setOtp] = useState('');
   const [number, setNumber] = useState('');
   const [waiting, setWaiting] = useState(false);
+  const password = Math.random().toString(10) + 'Abc#';
 
   useEffect(() => {
     console.log('Ready to auth');
+    setTimeout(verifyAuth, 1500);
   }, []);
 
   const verifyAuth = () => {
@@ -51,15 +56,22 @@ function App() {
   };
 
   const signIn = () => {
+    setMessage(VERIFYNUMBER);
     Auth.signIn(number)
       .then((user) => {
-        setUser(user);
+        setGuest(user);
+        setMessage(WAITINGFOROTP);
+        setWaiting(true);
       })
       .catch((e) => {
         if (e.code === 'UserNotFoundException') {
-          console.log('go to sign up page');
-        } else if (e.code === 'UserNotConfirmedException') {
-          setMessage('user needs to confirm the account');
+          signUp();
+          setMessage(WAITINGFOROTP);
+          setWaiting(true);
+        } else if (e.code === 'UsernameExistsException') {
+          setMessage(WAITINGFOROTP);
+          setWaiting(true);
+          signIn();
         } else {
           console.log(e.code);
           console.error(e);
@@ -67,21 +79,37 @@ function App() {
       });
   };
 
-  const verifyOtp = () => {};
+  const signUp = async () => {
+    const result = await Auth.signUp({
+      username: number,
+      password,
+      attributes: {
+        phone_number: number,
+      },
+    }).then(() => signIn());
+    return result;
+  };
+
+  const verifyOtp = () => {
+    Auth.sendCustomChallengeAnswer(guest, otp)
+      .then((user) => {
+        setUser(user);
+        setMessage(SIGNEDIN);
+        setWaiting(false);
+      })
+      .catch((err) => {
+        setMessage(err.message);
+        setOtp('');
+        signIn();
+        console.log(err);
+      });
+  };
 
   return (
     <div className='App'>
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
         <p>{message}</p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
         {!user && !waiting && (
           <div>
             <InputGroup className='mb-3'>
@@ -107,6 +135,7 @@ function App() {
                 aria-label='Your OTP'
                 aria-describedby='basic-addon2'
                 onChange={(event) => setOtp(event.target.value)}
+                value={otp}
               />
               <InputGroup.Append>
                 <Button variant='outline-secondary' onClick={verifyOtp}>

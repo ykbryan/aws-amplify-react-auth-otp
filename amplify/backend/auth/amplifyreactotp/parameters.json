@@ -1,7 +1,7 @@
 {
     "identityPoolName": "amplifyreactotp",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "amplifaebc7cc6",
+    "resourceNameTruncated": "amplif98d2b670",
     "userPoolName": "amplifyreactotp",
     "autoVerifiedAttributes": [
         "phone_number"
@@ -14,27 +14,29 @@
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
-    "defaultPasswordPolicy": false,
-    "passwordPolicyMinLength": 8,
+    "defaultPasswordPolicy": true,
+    "passwordPolicyMinLength": "6",
     "passwordPolicyCharacters": [],
-    "requiredAttributes": [],
+    "requiredAttributes": [
+        "phone_number"
+    ],
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-        "email"
+        "phone_number"
     ],
     "userpoolClientReadAttributes": [
-        "email"
+        "phone_number"
     ],
-    "userpoolClientLambdaRole": "amplifaebc7cc6_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
+    "userpoolClientLambdaRole": "amplif98d2b670_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": true,
     "useDefault": "manual",
     "authSelections": "identityPoolAndUserPool",
     "resourceName": "amplifyreactotp",
     "thirdPartyAuth": false,
     "userPoolGroups": false,
     "adminQueries": false,
-    "triggers": "{\"CreateAuthChallenge\":[\"boilerplate-create-challenge\"],\"DefineAuthChallenge\":[\"boilerplate-define-challenge\"],\"VerifyAuthChallengeResponse\":[\"boilerplate-verify\"]}",
+    "triggers": "{\"CreateAuthChallenge\":[\"boilerplate-create-challenge\"],\"DefineAuthChallenge\":[\"boilerplate-define-challenge\"],\"PreSignup\":[\"custom\"],\"VerifyAuthChallengeResponse\":[\"boilerplate-verify\"]}",
     "hostedUI": false,
     "userPoolGroupList": [],
     "authRoleArn": {
@@ -75,6 +77,15 @@
         {
             "category": "function",
             "resourceName": "amplifyreactotpVerifyAuthChallengeResponse",
+            "triggerProvider": "Cognito",
+            "attributes": [
+                "Arn",
+                "Name"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "amplifyreactotpPreSignup",
             "triggerProvider": "Cognito",
             "attributes": [
                 "Arn",

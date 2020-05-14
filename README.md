@@ -51,3 +51,11 @@ To learn React, check out the [React documentation](https://reactjs.org/).
   "Resource": "*"
 }
 ```
+
+https://docs.amplify.aws/lib/auth/emailpassword/q/platform/js#sign-out
+
+Update cloudformation-template.yaml at auth
+Find `autoVerifiedAttributes` and `SNSRole` to remove them
+
+Auth configuration to be done perfectly once as updates are not recommended
+These attributes were selected when the pool was created and cannot be changed.

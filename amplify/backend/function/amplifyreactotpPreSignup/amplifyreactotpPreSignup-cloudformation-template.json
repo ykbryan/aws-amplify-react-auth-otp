@@ -2,6 +2,14 @@
 	"AWSTemplateFormatVersion": "2010-09-09",
 	"Description": "Lambda resource stack creation using Amplify CLI",
 	"Parameters": {
+		"DOMAINBLACKLIST": {
+			"Type": "String",
+			"Default": ""
+		},
+		"DOMAINWHITELIST": {
+			"Type": "String",
+			"Default": ""
+		},
 		"modules": {
 			"Type": "String",
 			"Default": "",
@@ -57,12 +65,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"amplifyreactotpDefineAuthChallenge",
+						"amplifyreactotpPreSignup",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"amplifyreactotpDefineAuthChallenge",
+									"amplifyreactotpPreSignup",
 									"-",
 									{
 										"Ref": "env"
@@ -82,6 +90,12 @@
 						},
 						"REGION": {
 							"Ref": "AWS::Region"
+						},
+						"DOMAINWHITELIST": {
+							"Ref": "DOMAINWHITELIST"
+						},
+						"DOMAINBLACKLIST": {
+							"Ref": "DOMAINBLACKLIST"
 						}
 					}
 				},
@@ -95,7 +109,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-awsamplifyreactotp-dev-155059-deployment",
-					"S3Key": "amplify-builds/amplifyreactotpDefineAuthChallenge-362b494e35744e4f706a-build.zip"
+					"S3Key": "amplify-builds/amplifyreactotpPreSignup-7a713075634174716166-build.zip"
 				}
 			}
 		},
@@ -105,12 +119,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"amplifyreactotpDefineAuthChallenge",
+						"amplifyreactotpPreSignup",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"amplifyreactotpDefineAuthChallenge",
+									"amplifyreactotpPreSignup",
 									"-",
 									{
 										"Ref": "env"
