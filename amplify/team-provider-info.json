@@ -10,6 +10,18 @@
             "StackName": "amplify-awsamplifyreactotp-dev-155059",
             "StackId": "arn:aws:cloudformation:ap-southeast-1:566416766292:stack/amplify-awsamplifyreactotp-dev-155059/a8abb300-95b7-11ea-942c-02c6c7bea9ac",
             "AmplifyAppId": "d2qv3ncyf7pyvp"
+        },
+        "categories": {
+            "function": {
+                "amplifyreactotpCreateAuthChallenge": {
+                    "CHALLENGEANSWER": "ANSWER"
+                },
+                "amplifyreactotpDefineAuthChallenge": {},
+                "amplifyreactotpVerifyAuthChallengeResponse": {}
+            },
+            "auth": {
+                "amplifyreactotp": {}
+            }
         }
     }
 }

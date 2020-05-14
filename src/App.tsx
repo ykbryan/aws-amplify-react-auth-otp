@@ -1,23 +1,130 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+
+import Amplify from '@aws-amplify/core';
+import Auth from '@aws-amplify/auth';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
+
+const NOTSIGNIN = 'You are NOT logged in';
+const SIGNEDIN = 'You have logged in successfully';
+const SIGNEDOUT = 'You have logged out successfully';
 
 function App() {
+  const [message, setMessage] = useState('Welcome to AWS Amplify Demo');
+  const [user, setUser] = useState(null);
+  const [otp, setOtp] = useState('');
+  const [number, setNumber] = useState('');
+
+  useEffect(() => {
+    console.log('Ready to auth');
+  }, []);
+
+  const verifyAuth = () => {
+    Auth.currentAuthenticatedUser()
+      .then((user) => {
+        setUser(user);
+        setMessage(SIGNEDIN);
+      })
+      .catch((err) => {
+        console.error(err);
+        setMessage(NOTSIGNIN);
+      });
+  };
+
+  const signOut = () => {
+    if (user) {
+      Auth.signOut();
+      setUser(null);
+      setOtp('');
+      setMessage(SIGNEDOUT);
+    } else {
+      setMessage(NOTSIGNIN);
+    }
+  };
+
+  const signIn = () => {
+    Auth.signIn(number)
+      .then((user) => {
+        console.log(user);
+        setUser(user);
+      })
+      .catch((e) => {
+        if (e.code === 'UserNotFoundException') {
+          console.log('go to sign up page');
+        } else if (e.code === 'UserNotConfirmedException') {
+          setMessage('user needs to confirm the account');
+        } else {
+          console.log(e);
+        }
+      });
+  };
+
+  const verifyOtp = () => {};
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+    <div className='App'>
+      <header className='App-header'>
+        <img src={logo} className='App-logo' alt='logo' />
+        <p>{message}</p>
         <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+          className='App-link'
+          href='https://reactjs.org'
+          target='_blank'
+          rel='noopener noreferrer'
         >
           Learn React
         </a>
+        {!otp && (
+          <div>
+            <InputGroup className='mb-3'>
+              <FormControl
+                placeholder='Your Phone Number'
+                aria-label='Your Phone Number'
+                aria-describedby='basic-addon2'
+                onChange={(event) => setNumber(event.target.value)}
+              />
+              <InputGroup.Append>
+                <Button variant='outline-secondary' onClick={signIn}>
+                  Get OTP
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </div>
+        )}
+        {otp && (
+          <div>
+            <InputGroup className='mb-3'>
+              <FormControl
+                placeholder='Your OTP'
+                aria-label='Your OTP'
+                aria-describedby='basic-addon2'
+                onChange={(event) => setOtp(event.target.value)}
+              />
+              <InputGroup.Append>
+                <Button variant='outline-secondary' onClick={verifyOtp}>
+                  Confirm
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </div>
+        )}
+        <div>
+          <ButtonGroup aria-label='Basic example'>
+            <Button variant='outline-primary' onClick={verifyAuth}>
+              Am I sign in?
+            </Button>
+            <Button variant='outline-danger' onClick={signOut}>
+              Sign Out
+            </Button>
+          </ButtonGroup>
+        </div>
       </header>
     </div>
   );
