@@ -22,6 +22,12 @@
             },
             "auth": {
                 "amplifyreactotp": {}
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d2qv3ncyf7pyvp",
+                    "type": "cicd"
+                }
             }
         }
     }

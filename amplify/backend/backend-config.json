@@ -65,5 +65,11 @@
             ],
             "customAuth": true
         }
+    },
+    "hosting": {
+        "amplifyhosting": {
+            "service": "amplifyhosting",
+            "type": "cicd"
+        }
     }
 }
