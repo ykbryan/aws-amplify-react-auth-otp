@@ -16,7 +16,7 @@ const NOTSIGNIN = 'You are NOT logged in';
 const SIGNEDIN = 'You have logged in successfully';
 const SIGNEDOUT = 'You have logged out successfully';
 const WAITINGFOROTP = 'Enter OTP number';
-const VERIFYNUMBER = 'Verifying number';
+const VERIFYNUMBER = 'Verifying number (Country code +XX needed)';
 
 function App() {
   const [message, setMessage] = useState('Welcome to AWS Amplify Demo');
@@ -114,7 +114,7 @@ function App() {
           <div>
             <InputGroup className='mb-3'>
               <FormControl
-                placeholder='Your Phone Number'
+                placeholder='Phone Number (+XX)'
                 aria-label='Your Phone Number'
                 aria-describedby='basic-addon2'
                 onChange={(event) => setNumber(event.target.value)}
