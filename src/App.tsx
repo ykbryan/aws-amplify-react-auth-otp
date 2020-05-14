@@ -66,7 +66,7 @@ function App() {
       .catch((e) => {
         if (e.code === 'UserNotFoundException') {
           signUp();
-          setMessage(WAITINGFOROTP);
+          // setMessage(WAITINGFOROTP);
           setWaiting(true);
         } else if (e.code === 'UsernameExistsException') {
           setMessage(WAITINGFOROTP);
@@ -98,9 +98,9 @@ function App() {
         setWaiting(false);
       })
       .catch((err) => {
+        signIn();
         setMessage(err.message);
         setOtp('');
-        signIn();
         console.log(err);
       });
   };
