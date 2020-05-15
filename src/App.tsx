@@ -111,8 +111,6 @@ function App() {
             <InputGroup className='mb-3'>
               <FormControl
                 placeholder='Phone Number (+XX)'
-                aria-label='Your Phone Number'
-                aria-describedby='basic-addon2'
                 onChange={(event) => setNumber(event.target.value)}
               />
               <InputGroup.Append>
@@ -128,8 +126,6 @@ function App() {
             <InputGroup className='mb-3'>
               <FormControl
                 placeholder='Your OTP'
-                aria-label='Your OTP'
-                aria-describedby='basic-addon2'
                 onChange={(event) => setOtp(event.target.value)}
                 value={otp}
               />
@@ -142,7 +138,7 @@ function App() {
           </div>
         )}
         <div>
-          <ButtonGroup aria-label='Basic example'>
+          <ButtonGroup>
             <Button variant='outline-primary' onClick={verifyAuth}>
               Am I sign in?
             </Button>
