@@ -21,10 +21,9 @@ const VERIFYNUMBER = 'Verifying number (Country code +XX needed)';
 function App() {
   const [message, setMessage] = useState('Welcome to AWS Amplify Demo');
   const [user, setUser] = useState(null);
-  const [guest, setGuest] = useState(null);
+  const [session, setSession] = useState(null);
   const [otp, setOtp] = useState('');
   const [number, setNumber] = useState('');
-  const [waiting, setWaiting] = useState(false);
   const password = Math.random().toString(10) + 'Abc#';
 
   useEffect(() => {
@@ -37,6 +36,7 @@ function App() {
       .then((user) => {
         setUser(user);
         setMessage(SIGNEDIN);
+        setSession(null);
       })
       .catch((err) => {
         console.error(err);
@@ -59,16 +59,14 @@ function App() {
     setMessage(VERIFYNUMBER);
     Auth.signIn(number)
       .then((user) => {
-        setGuest(user);
+        setSession(user);
         setMessage(WAITINGFOROTP);
-        setWaiting(true);
       })
       .catch((e) => {
         if (e.code === 'UserNotFoundException') {
           signUp();
         } else if (e.code === 'UsernameExistsException') {
           setMessage(WAITINGFOROTP);
-          setWaiting(true);
           signIn();
         } else {
           console.log(e.code);
@@ -89,11 +87,11 @@ function App() {
   };
 
   const verifyOtp = () => {
-    Auth.sendCustomChallengeAnswer(guest, otp)
+    Auth.sendCustomChallengeAnswer(session, otp)
       .then((user) => {
         setUser(user);
         setMessage(SIGNEDIN);
-        setWaiting(false);
+        setSession(null);
       })
       .catch((err) => {
         signIn();
@@ -108,7 +106,7 @@ function App() {
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
         <p>{message}</p>
-        {!user && !waiting && (
+        {!user && !session && (
           <div>
             <InputGroup className='mb-3'>
               <FormControl
@@ -125,7 +123,7 @@ function App() {
             </InputGroup>
           </div>
         )}
-        {!user && waiting && (
+        {!user && session && (
           <div>
             <InputGroup className='mb-3'>
               <FormControl
