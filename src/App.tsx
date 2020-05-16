@@ -58,8 +58,8 @@ function App() {
   const signIn = () => {
     setMessage(VERIFYNUMBER);
     Auth.signIn(number)
-      .then((user) => {
-        setSession(user);
+      .then((result) => {
+        setSession(result);
         setMessage(WAITINGFOROTP);
       })
       .catch((e) => {
