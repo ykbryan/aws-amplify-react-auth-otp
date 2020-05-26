@@ -102,7 +102,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-awsamplifyreactotp-dev-155059-deployment",
-					"S3Key": "amplify-builds/amplifyreactotpVerifyAuthChallengeResponse-66764c6d4d5241487762-build.zip"
+					"S3Key": "amplify-builds/amplifyreactotpVerifyAuthChallengeResponse-4b4f376e764c354b3851-build.zip"
 				}
 			}
 		},
