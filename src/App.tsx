@@ -140,7 +140,7 @@ function App() {
         <div>
           <ButtonGroup>
             <Button variant='outline-primary' onClick={verifyAuth}>
-              Am I sign in?
+              Am I signed in?
             </Button>
             <Button variant='outline-danger' onClick={signOut}>
               Sign Out
