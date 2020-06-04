@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
     console.log('Ready to auth');
-    Auth.currentCredentials();
+    // Auth.currentCredentials();
     setTimeout(verifyAuth, 1500);
     Analytics.autoTrack('session', {
       enable: true,
