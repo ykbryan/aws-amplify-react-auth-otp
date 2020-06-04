@@ -9,6 +9,7 @@ import FormControl from 'react-bootstrap/FormControl';
 
 import Amplify from '@aws-amplify/core';
 import Auth from '@aws-amplify/auth';
+import Analytics from '@aws-amplify/analytics';
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
 
@@ -28,7 +29,11 @@ function App() {
 
   useEffect(() => {
     console.log('Ready to auth');
+    Auth.currentCredentials();
     setTimeout(verifyAuth, 1500);
+    Analytics.autoTrack('session', {
+      enable: true,
+    });
   }, []);
 
   const verifyAuth = () => {

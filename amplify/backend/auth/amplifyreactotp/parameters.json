@@ -1,6 +1,6 @@
 {
     "identityPoolName": "amplifyreactotp",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "amplif98d2b670",
     "userPoolName": "amplifyreactotp",
     "autoVerifiedAttributes": [
